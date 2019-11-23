@@ -153,6 +153,9 @@ function App() {
 
 	return (
 		<>
+			<Logo>
+				<span>⏣</span> Chroma
+			</Logo>
 			<Layout>
 				<Spacer size="xxl">
 					<Label isMuted>Colors</Label>
@@ -284,6 +287,22 @@ const Container = styled.div`
 	justify-content: space-between;
 	margin: auto;
 	padding: 0 20px;
+`;
+
+const Logo = styled.div`
+	position: fixed;
+	top: 10px;
+	left: 20px;
+	font-size: 13px;
+	font-weight: bold;
+
+	span {
+		color: var(--accentColor);
+		position: relative;
+		top: 0px;
+		font-size: 18px;
+		margin-right: 3px;
+	}
 `;
 
 export default App;
