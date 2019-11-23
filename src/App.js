@@ -135,15 +135,6 @@ function App() {
 		setNewColors(colorData);
 	};
 
-	const handleGenerateOppositeColors = () => {
-		const nextColors = colorize(mainColor)
-			.splitcomplement()
-			.map(c => c.toHexString());
-		const [, , nextColor] = nextColors;
-		const colorData = generateColors(nextColor);
-		setNewColors(colorData);
-	};
-
 	const handleLightenColors = () => {
 		const nextColor = colorize(mainColor)
 			.lighten(10)
@@ -234,10 +225,7 @@ function App() {
 						</button>
 						<span>||</span>
 						<button onClick={handleGenerateSimilarColors}>
-							Similar
-						</button>
-						<button onClick={handleGenerateOppositeColors}>
-							Opposite
+							Refine
 						</button>
 						<span>||</span>
 						<button onClick={handleDarkenColors}>Darken</button>
