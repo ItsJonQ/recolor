@@ -31,9 +31,9 @@ const Card = styled.div`
 
 const Color = styled.div`
 	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-	transition: all 200ms ease;
 	height: 0;
 	padding-bottom: 75%;
+	transition: all 200ms ease;
 	width: 100%;
 `;
 

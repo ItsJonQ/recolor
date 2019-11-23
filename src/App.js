@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import randomColor from 'randomcolor';
 import colorize from 'tinycolor2';
+import { sample } from 'lodash';
 
 import Alphabet from './components/Alphabet';
 import Label from './components/Label';
@@ -9,6 +10,30 @@ import LoremTitle from './components/LoremTitle';
 import LoremBody from './components/LoremBody';
 import Swatch from './components/Swatch';
 import Spacer from './components/Spacer';
+
+const FONTS = [
+	'Alata',
+	'Arimo',
+	'Barlow',
+	'Calistoga',
+	'Heebo',
+	'Ibarra Real Nova',
+	'Lato',
+	'Libre Baskerville',
+	'Libre Franklin',
+	'Lora',
+	'Merriweather',
+	'Nunito',
+	'Open Sans',
+	'Playfair Display',
+	'Poppins',
+	'Roboto',
+	'Roboto Slab',
+];
+
+function generateRandomFont() {
+	return sample(FONTS);
+}
 
 function generateColors(nextColor) {
 	const data = colorize(nextColor).splitcomplement();
@@ -69,8 +94,9 @@ function App() {
 	const [mainColor, setMainColor] = useState(initialColors.color);
 	const [accentColor, setAccentColor] = useState(initialColors.accent);
 	const [textColor, setTextColor] = useState(initialColors.text);
-	const [isColorLight, setIsColorLight] = useState(initialColors.isLight);
 	const [uiColor, setUiColor] = useState(initialColors.ui);
+	const [titleFont, setTitleFont] = useState(generateRandomFont());
+	const [bodyFont, setBodyFont] = useState(generateRandomFont());
 
 	useEffect(() => {
 		const node = document.documentElement;
@@ -78,14 +104,20 @@ function App() {
 		node.style.setProperty(`--accentColor`, accentColor);
 		node.style.setProperty(`--textColor`, textColor);
 		node.style.setProperty(`--uiColor`, uiColor);
-	}, [mainColor, accentColor, textColor, uiColor]);
+		node.style.setProperty(`--titleFont`, titleFont);
+		node.style.setProperty(`--bodyFont`, bodyFont);
+	}, [mainColor, accentColor, textColor, uiColor, titleFont, bodyFont]);
+
+	const handleGenerateRandomFonts = () => {
+		setTitleFont(generateRandomFont());
+		setBodyFont(generateRandomFont());
+	};
 
 	const setNewColors = colorData => {
-		const { color, accent, text, isLight, ui } = colorData;
+		const { color, accent, text, ui } = colorData;
 		setMainColor(color);
 		setAccentColor(accent);
 		setTextColor(text);
-		setIsColorLight(isLight);
 		setUiColor(ui);
 	};
 
@@ -159,16 +191,22 @@ function App() {
 					</Section>
 				</Spacer>
 
-				<Label isMuted>Typography</Label>
-				<Accent style={{ backgroundColor: accentColor }} />
+				<Spacer size="md">
+					<Label isMuted>Typography</Label>
+				</Spacer>
 				<Section>
 					<Body>
 						<LoremTitle style={{ color: accentColor }} />
 					</Body>
 					<Sidebar>
 						<Spacer>
-							<Label isMuted>Text</Label>
-							<Alphabet style={{ color: accentColor }} />
+							<Label isMuted>{titleFont}</Label>
+							<Alphabet
+								style={{
+									color: accentColor,
+									fontFamily: 'var(--titleFont)',
+								}}
+							/>
 						</Spacer>
 					</Sidebar>
 				</Section>
@@ -178,27 +216,38 @@ function App() {
 					</Body>
 					<Sidebar>
 						<Spacer>
-							<Label isMuted>Text</Label>
-							<Alphabet />
+							<Label isMuted>{bodyFont}</Label>
+							<Alphabet
+								style={{
+									fontFamily: 'var(--bodyFont)',
+								}}
+							/>
 						</Spacer>
 					</Sidebar>
 				</Section>
 			</Layout>
 			<FooterBar style={{ backgroundColor: uiColor }}>
 				<Container>
-					<button onClick={handleGenerateRandomColors}>
-						Randomize
-					</button>
-					<span>||</span>
-					<button onClick={handleGenerateSimilarColors}>
-						Similar
-					</button>
-					<button onClick={handleGenerateOppositeColors}>
-						Opposite
-					</button>
-					<span>||</span>
-					<button onClick={handleDarkenColors}>Darken</button>
-					<button onClick={handleLightenColors}>Lighten</button>
+					<div>
+						<button onClick={handleGenerateRandomColors}>
+							Randomize Colors
+						</button>
+						<span>||</span>
+						<button onClick={handleGenerateSimilarColors}>
+							Similar
+						</button>
+						<button onClick={handleGenerateOppositeColors}>
+							Opposite
+						</button>
+						<span>||</span>
+						<button onClick={handleDarkenColors}>Darken</button>
+						<button onClick={handleLightenColors}>Lighten</button>
+					</div>
+					<div>
+						<button onClick={handleGenerateRandomFonts}>
+							Randomize Fonts
+						</button>
+					</div>
 				</Container>
 			</FooterBar>
 		</>
@@ -214,12 +263,6 @@ const Layout = styled.div`
 const Section = styled.div`
 	display: flex;
 	margin-bottom: 16px;
-`;
-
-const Accent = styled.div`
-	width: 32px;
-	height: 4px;
-	margin: 24px 0 16px;
 `;
 
 const Body = styled.div`
@@ -243,15 +286,16 @@ const FooterBar = styled.div`
 	bottom: 0;
 	left: 0;
 	right: 0;
-	padding: 40px 20px;
+	padding: 32px 0px;
 `;
 
 const Container = styled.div`
-	max-width: 600px;
+	max-width: 920px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	margin: auto;
+	padding: 0 20px;
 `;
 
 export default App;

@@ -9,13 +9,13 @@ export default function LoremBody() {
 			suscipit ex ex, a accumsan libero egestas nec. Phasellus enim nulla,
 			hendrerit et dapibus nec, mattis a dolor. Donec semper ante nec
 			purus dapibus, eu maximus nisi venenatis. Nulla eget eros sed neque
-			dictum pharetra. Donec scelerisque dignissim aliquet. Sed vehicula
-			efficitur nibh, ac vulputate elit maximus vel
+			dictum pharetra. Donec scelerisque dignissim aliquet.
 		</Body>
 	);
 }
 
 const Body = styled.p`
+	font-family: var(--bodyFont);
 	font-size: 1rem;
 	margin: 0;
 	line-height: 1.5;
