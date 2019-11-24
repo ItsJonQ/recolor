@@ -15,8 +15,7 @@ const Label = styled.div`
 	${isMuted};
 	${size};
 	font-weight: bold;
-	font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
-		monospace;
+	font-family: var(--fontFamilyCode);
 	margin-bottom: 8px;
 	text-transform: uppercase;
 `;
