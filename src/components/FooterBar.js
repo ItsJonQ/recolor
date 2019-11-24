@@ -31,7 +31,7 @@ export default function FooterBar({
 									isPrimary
 									onClick={onGenerateRandomColors}
 								>
-									Randomize
+									Generate
 								</Button>
 							</Flexy.Item>
 							<Viewport.Desktop>
