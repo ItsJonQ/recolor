@@ -1,4 +1,23 @@
+import { sample } from 'lodash';
+import randomColor from 'randomcolor';
 import colorize from 'tinycolor2';
+
+export function generateRandomColor() {
+	const nextColor = randomColor();
+	const adjustmentRange = [0, 10, 20];
+	const adjustments = ['lighten', 'darken', false];
+
+	const adjustment = sample(adjustments);
+	const range = sample(adjustmentRange);
+
+	if (!adjustment) {
+		return nextColor;
+	}
+
+	const colorData = colorize(nextColor);
+
+	return colorData[adjustment](range).toHexString();
+}
 
 export function generateColors(nextColor) {
 	const data = colorize(nextColor).splitcomplement();

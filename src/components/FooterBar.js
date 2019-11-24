@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { noop } from 'lodash';
 
+import Card from './Card';
 import View from './View';
 import Button from './Button';
 import Flexy from './Flexy';
@@ -62,7 +63,7 @@ export default function FooterBar({
 	);
 }
 
-const Bar = styled(View)`
+const Bar = styled(Card)`
 	position: fixed;
 	bottom: 0;
 	left: 0;

@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
-import randomColor from 'randomcolor';
 import colorize from 'tinycolor2';
+import queryString from 'query-string';
 
 import {
+	generateRandomColor,
 	generateColors,
 	generateRandomFont,
 	setColorProperties,
 } from './utils';
 
-const initialColors = generateColors(randomColor());
+const initialColor = getInitialColor();
+const initialColors = generateColors(initialColor);
+
+const BASE_TITLE = 'Chroma';
 
 export function useStore() {
 	const [mainColor, setMainColor] = useState(initialColors.color);
@@ -17,6 +21,24 @@ export function useStore() {
 	const [uiColor, setUiColor] = useState(initialColors.ui);
 	const [titleFont, setTitleFont] = useState(generateRandomFont());
 	const [bodyFont, setBodyFont] = useState(generateRandomFont());
+
+	useEffect(() => {
+		const didReloadPage = performance && performance.navigation.type === 1;
+		if (didReloadPage) {
+			window.document.location.search = '';
+		}
+	}, []);
+
+	useEffect(() => {
+		document.title = createPageTitle(mainColor);
+
+		const { protocol, host } = window.location;
+		const searchQuery = queryString.stringify({
+			color: mainColor,
+		});
+		const nextUrl = `${protocol}//${host}/?${searchQuery}`;
+		window.history.replaceState({ path: nextUrl }, '', nextUrl);
+	}, [mainColor]);
 
 	useEffect(() => {
 		setColorProperties({
@@ -43,7 +65,7 @@ export function useStore() {
 	};
 
 	const generateRandomColors = () => {
-		const colorData = generateColors(randomColor());
+		const colorData = generateColors(generateRandomColor());
 		setNewColors(colorData);
 	};
 
@@ -87,4 +109,19 @@ export function useStore() {
 		lightenColors,
 		darkenColors,
 	};
+}
+
+function createPageTitle(color) {
+	return `${BASE_TITLE} || ${color}`;
+}
+
+function getInitialColor() {
+	const { color } = queryString.parse(window.location.search);
+	const initialColorData = colorize(color);
+
+	if (!initialColorData._ok) {
+		return generateRandomColor();
+	}
+
+	return initialColorData.toHexString();
 }
