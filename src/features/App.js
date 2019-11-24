@@ -1,13 +1,13 @@
 import React from 'react';
 
-import AppBar from './components/AppBar';
-import FooterBar from './components/FooterBar';
-import Layout from './components/Layout';
-import SampleColors from './samples/SampleColors';
-import SampleTypography from './samples/SampleTypography';
-import Spacer from './components/Spacer';
+import AppBar from '../components/AppBar';
+import FooterBar from '../components/FooterBar';
+import Layout from '../components/Layout';
+import SampleColors from '../samples/SampleColors';
+import SampleTypography from '../samples/SampleTypography';
+import Spacer from '../components/Spacer';
 
-import { useStore } from './store';
+import { useStore } from '../store';
 
 function App() {
 	const {

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import colorize from 'tinycolor2';
 import queryString from 'query-string';
 
+import { useRouter } from './utils/hooks';
+
 import {
 	generateRandomColor,
 	generateColors,
@@ -15,6 +17,8 @@ const initialColors = generateColors(initialColor);
 const BASE_TITLE = 'Chroma';
 
 export function useStore() {
+	const { history } = useRouter();
+
 	const [mainColor, setMainColor] = useState(initialColors.color);
 	const [accentColor, setAccentColor] = useState(initialColors.accent);
 	const [textColor, setTextColor] = useState(initialColors.text);
@@ -32,13 +36,14 @@ export function useStore() {
 	useEffect(() => {
 		document.title = createPageTitle(mainColor);
 
-		const { protocol, host } = window.location;
 		const searchQuery = queryString.stringify({
 			color: mainColor,
 		});
-		const nextUrl = `${protocol}//${host}/?${searchQuery}`;
-		window.history.replaceState({ path: nextUrl }, '', nextUrl);
-	}, [mainColor]);
+
+		history.replace({
+			search: searchQuery,
+		});
+	}, [history, mainColor]);
 
 	useEffect(() => {
 		setColorProperties({

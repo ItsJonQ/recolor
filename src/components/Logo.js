@@ -10,8 +10,10 @@ export default function Logo() {
 }
 
 const LogoText = styled.div`
+	font-family: var(--fontFamilyCode);
 	font-size: 13px;
 	font-weight: bold;
+	text-transform: uppercase;
 
 	span {
 		color: var(--accentColor);
