@@ -1,1 +1,1 @@
-export const transitions = () => `transition: all 200ms ease;`;
+export const transitions = () => `transition: all 200ms linear;`;

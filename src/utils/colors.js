@@ -2,21 +2,40 @@ import { sample } from 'lodash';
 import randomColor from 'randomcolor';
 import colorize from 'tinycolor2';
 
+function shouldRegenerateColor(color) {
+	const colorHex = color.toLowerCase();
+	/**
+	 * Avoid using black or white
+	 */
+	const shouldTryAgain = colorHex === '#000000' || colorHex === '#ffffff';
+
+	return shouldTryAgain;
+}
+
 export function generateRandomColor() {
-	const nextColor = randomColor();
-	const adjustmentRange = [0, 10, 20];
+	const nextColor = sample([randomColor(), '#ffffff']);
+	const adjustmentRange = [0, 5, 10, 15, 20];
 	const adjustments = ['lighten', 'darken', false];
 
 	const adjustment = sample(adjustments);
 	const range = sample(adjustmentRange);
+
+	if (shouldRegenerateColor(nextColor)) {
+		return generateRandomColor();
+	}
 
 	if (!adjustment) {
 		return nextColor;
 	}
 
 	const colorData = colorize(nextColor);
+	const nextRandomColor = colorData[adjustment](range).toHexString();
 
-	return colorData[adjustment](range).toHexString();
+	if (shouldRegenerateColor(nextRandomColor)) {
+		return generateRandomColor();
+	}
+
+	return nextRandomColor;
 }
 
 export function generateColors(nextColor) {
