@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import View from './View';
 
 const gap = ({ gap = 'md' }) => {
 	const gaps = {
@@ -21,7 +22,7 @@ const gap = ({ gap = 'md' }) => {
     `;
 };
 
-const Flexy = styled.div`
+const Flexy = styled(View)`
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
@@ -29,12 +30,12 @@ const Flexy = styled.div`
 	${gap};
 `;
 
-const Item = styled.div`
+const Item = styled(View)`
 	min-width: 0;
 	max-width: 100%;
 `;
 
-const Block = styled.div`
+const Block = styled(View)`
 	flex: 1;
 	min-width: 0;
 	max-width: 100%;

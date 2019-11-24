@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { noop } from 'lodash';
 
+import View from './View';
 import Button from './Button';
 import Flexy from './Flexy';
 import Label from './Label';
@@ -16,7 +17,7 @@ export default function FooterBar({
 	uiColor,
 }) {
 	return (
-		<Bar style={{ backgroundColor: uiColor }}>
+		<Bar bg={uiColor}>
 			<Container>
 				<Flexy>
 					<Flexy.Item>
@@ -52,7 +53,7 @@ export default function FooterBar({
 						</Flexy>
 					</Flexy.Item>
 					<Flexy.Item>
-						<Label isMuted size="sm" style={{ textAlign: 'right' }}>
+						<Label isMuted size="sm" textAlign="right">
 							Fonts
 						</Label>
 						<Button onClick={handleGenerateRandomFonts}>
@@ -65,7 +66,7 @@ export default function FooterBar({
 	);
 }
 
-const Bar = styled.div`
+const Bar = styled(View)`
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -73,7 +74,7 @@ const Bar = styled.div`
 	padding: 32px 0px;
 `;
 
-const Container = styled.div`
+const Container = styled(View)`
 	max-width: 920px;
 	margin: auto;
 	padding: 0 20px;

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import View from './View';
 
 const size = ({ size = 'md' }) => {
 	const sizes = {
@@ -13,7 +14,7 @@ const size = ({ size = 'md' }) => {
 	return `margin-bottom: ${sizes[size]};`;
 };
 
-const Spacer = styled.div`
+const Spacer = styled(View)`
 	${size};
 `;
 

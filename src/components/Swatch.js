@@ -10,10 +10,10 @@ export default function Swatch(props) {
 		<Card style={{ backgroundColor: bgColor }}>
 			<Color style={{ backgroundColor: color }} />
 			<LabelWrapper>
-				<Label size="sm" style={{ margin: 0 }}>
+				<Label size="xs" mb={0}>
 					{label}
 				</Label>
-				<Label size="xs" isMuted style={{ marginBottom: 4 }}>
+				<Label size="xs" isMuted mb={1}>
 					{color}
 				</Label>
 			</LabelWrapper>

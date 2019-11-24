@@ -27,6 +27,7 @@ const Button = styled.button`
 	white-space: nowrap;
 
 	&:focus {
+		outline: 2px dotted;
 		z-index: 1;
 	}
 
