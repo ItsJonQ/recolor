@@ -24,6 +24,7 @@ function App() {
 		generateSimilarColors,
 		lightenColors,
 		darkenColors,
+		setNewColors,
 	} = useStore();
 
 	const actions = {
@@ -39,7 +40,13 @@ function App() {
 			<AppBar />
 			<Layout>
 				<SampleColors
-					{...{ accentColor, mainColor, textColor, uiColor }}
+					{...{
+						accentColor,
+						mainColor,
+						textColor,
+						uiColor,
+						setNewColors,
+					}}
 				/>
 				<Spacer size="md">
 					<SampleTypography

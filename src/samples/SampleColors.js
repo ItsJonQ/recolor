@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
+import { Manager, Reference, Popper } from 'react-popper';
+import { SketchPicker } from 'react-color';
 
 import Box from '../components/View';
 import Label from '../components/Label';
@@ -8,12 +10,93 @@ import Spacer from '../components/Spacer';
 import Swatch from '../components/Swatch';
 import Section from '../components/Section';
 import Viewport from '../components/Viewport';
+import View from '../components/View';
 
-function Swatches({ mainColor, accentColor, textColor, uiColor }) {
+function MainColorSwatch({ uiColor, mainColor, setNewColors }) {
+	const [isOpen, setOpen] = useState(false);
+	const popperRef = useRef(null);
+
+	useEffect(() => {
+		const node = popperRef.current;
+		const handleBodyClick = event => {
+			const { target } = event;
+
+			if (node !== target && !node.contains(target)) {
+				setOpen(false);
+			}
+		};
+
+		if (node && isOpen) {
+			document.addEventListener('click', handleBodyClick);
+		}
+
+		return () => {
+			if (node && isOpen) {
+				document.removeEventListener('click', handleBodyClick);
+			}
+		};
+	}, [popperRef, isOpen, setOpen]);
+
+	const handleOnChange = color => {
+		setNewColors(color.hex);
+	};
+
+	return (
+		<Manager>
+			<Reference>
+				{({ ref }) => (
+					<View
+						type="button"
+						ref={ref}
+						onClick={() => setOpen(true)}
+						style={{ cursor: 'pointer' }}
+					>
+						<Swatch
+							bgColor={uiColor}
+							label="Main"
+							color={mainColor}
+						/>
+					</View>
+				)}
+			</Reference>
+			{isOpen && (
+				<Popper placement="right-start">
+					{({ ref, style, placement }) => (
+						<View ref={popperRef}>
+							<View
+								ref={ref}
+								style={{ ...style, zIndex: 8 }}
+								data-placement={placement}
+							>
+								<SketchPicker
+									disableAlpha={true}
+									color={mainColor}
+									onChangeComplete={handleOnChange}
+								/>
+							</View>
+						</View>
+					)}
+				</Popper>
+			)}
+		</Manager>
+	);
+}
+
+function Swatches({
+	mainColor,
+	accentColor,
+	textColor,
+	uiColor,
+	setNewColors,
+}) {
 	return (
 		<>
 			<Box mb={2}>
-				<Swatch bgColor={uiColor} label="Main" color={mainColor} />
+				<MainColorSwatch
+					mainColor={mainColor}
+					uiColor={uiColor}
+					setNewColors={setNewColors}
+				/>
 			</Box>
 			<Box mb={2}>
 				<Swatch bgColor={uiColor} label="Accent" color={accentColor} />

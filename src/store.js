@@ -61,7 +61,8 @@ export function useStore() {
 		setBodyFont(generateRandomFont());
 	};
 
-	const setNewColors = colorData => {
+	const setNewColors = newColor => {
+		const colorData = generateColors(newColor);
 		const { color, accent, text, ui } = colorData;
 		setMainColor(color);
 		setAccentColor(accent);
@@ -70,8 +71,7 @@ export function useStore() {
 	};
 
 	const generateRandomColors = () => {
-		const colorData = generateColors(generateRandomColor());
-		setNewColors(colorData);
+		setNewColors(generateRandomColor());
 	};
 
 	const generateSimilarColors = () => {
@@ -79,8 +79,7 @@ export function useStore() {
 			.analogous()
 			.map(c => c.toHexString());
 		const [, nextColor] = nextColors;
-		const colorData = generateColors(nextColor);
-		setNewColors(colorData);
+		setNewColors(nextColor);
 	};
 
 	const lightenColors = () => {
@@ -113,6 +112,7 @@ export function useStore() {
 		generateSimilarColors,
 		lightenColors,
 		darkenColors,
+		setNewColors,
 	};
 }
 
