@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import Box from '../components/View';
 import Label from '../components/Label';
 import Flexy from '../components/Flexy';
+import Spacer from '../components/Spacer';
 import Swatch from '../components/Swatch';
 import Section from '../components/Section';
 import Viewport from '../components/Viewport';
@@ -37,12 +38,14 @@ export default function SampleColors(props) {
 				</DesktopContainer>
 			</Viewport.Desktop>
 			<Viewport.Mobile>
-				<Label isMuted>Colors</Label>
-				<Section>
-					<Flexy>
-						<Swatches {...props} />
-					</Flexy>
-				</Section>
+				<Spacer size="xxl">
+					<Label isMuted>Colors</Label>
+					<Section>
+						<Flexy>
+							<Swatches {...props} />
+						</Flexy>
+					</Section>
+				</Spacer>
 			</Viewport.Mobile>
 		</>
 	);

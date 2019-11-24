@@ -9,7 +9,9 @@ export default function LoremBody() {
 			suscipit ex ex, a accumsan libero egestas nec. Phasellus enim nulla,
 			hendrerit et dapibus nec, mattis a dolor. Donec semper ante nec
 			purus dapibus, eu maximus nisi venenatis. Nulla eget eros sed neque
-			dictum pharetra. Donec scelerisque dignissim aliquet.
+			dictum pharetra. Donec scelerisque dignissim aliquet. Ut sit amet
+			condimentum felis, at lacinia risus. Vivamus pellentesque interdum
+			sem. Suspendisse rhoncus mi ex, et eleifend ante rhoncus vel.
 		</Body>
 	);
 }

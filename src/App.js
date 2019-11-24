@@ -38,12 +38,9 @@ function App() {
 		<>
 			<AppBar />
 			<Layout>
-				<Spacer size="xxl">
-					<SampleColors
-						{...{ accentColor, mainColor, textColor, uiColor }}
-					/>
-				</Spacer>
-
+				<SampleColors
+					{...{ accentColor, mainColor, textColor, uiColor }}
+				/>
 				<Spacer size="md">
 					<SampleTypography
 						{...{ bodyFont, titleFont, accentColor }}

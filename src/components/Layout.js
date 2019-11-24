@@ -7,6 +7,7 @@ const Layout = styled(View)`
 	margin: 50px auto;
 
 	@media (min-width: 768px) {
+		margin-top: 72px;
 		padding-left: 120px;
 	}
 
