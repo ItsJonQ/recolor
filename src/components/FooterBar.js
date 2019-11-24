@@ -9,11 +9,11 @@ import Label from './Label';
 import Viewport from './Viewport';
 
 export default function FooterBar({
-	handleGenerateRandomColors = noop,
-	handleGenerateSimilarColors = noop,
-	handleDarkenColors = noop,
-	handleLightenColors = noop,
-	handleGenerateRandomFonts = noop,
+	onGenerateRandomColors = noop,
+	onGenerateSimilarColors = noop,
+	onDarkenColors = noop,
+	onLightenColors = noop,
+	onGenerateRandomFonts = noop,
 	uiColor,
 }) {
 	return (
@@ -28,24 +28,22 @@ export default function FooterBar({
 							<Flexy.Item>
 								<Button
 									isPrimary
-									onClick={handleGenerateRandomColors}
+									onClick={onGenerateRandomColors}
 								>
 									Randomize
 								</Button>
 							</Flexy.Item>
 							<Viewport.Desktop>
 								<Flexy.Item>
-									<Button
-										onClick={handleGenerateSimilarColors}
-									>
+									<Button onClick={onGenerateSimilarColors}>
 										Refine
 									</Button>
 								</Flexy.Item>
 								<Flexy.Item>
-									<Button onClick={handleDarkenColors}>
+									<Button onClick={onDarkenColors}>
 										Darken
 									</Button>
-									<Button onClick={handleLightenColors}>
+									<Button onClick={onLightenColors}>
 										Lighten
 									</Button>
 								</Flexy.Item>
@@ -56,9 +54,7 @@ export default function FooterBar({
 						<Label isMuted size="sm" textAlign="right">
 							Fonts
 						</Label>
-						<Button onClick={handleGenerateRandomFonts}>
-							Remix
-						</Button>
+						<Button onClick={onGenerateRandomFonts}>Remix</Button>
 					</Flexy.Item>
 				</Flexy>
 			</Container>
