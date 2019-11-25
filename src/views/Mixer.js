@@ -43,6 +43,10 @@ export default function Mixer() {
 					<Flexy.Item>
 						<Label>START</Label>
 						<Swatch color={color} label="START" />
+						<Spacer />
+						<Label isMuted size="xs">
+							{isLight ? 'LIGHT' : 'DARK'}
+						</Label>
 					</Flexy.Item>
 					<Flexy.Item>
 						<Spacer>

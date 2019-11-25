@@ -13,7 +13,8 @@ function shouldRegenerateColor(color) {
 }
 
 export function generateRandomColor() {
-	const nextColor = sample([randomColor(), '#ffffff']);
+	const randomColorOptions = {};
+	const nextColor = randomColor(randomColorOptions);
 	const adjustmentRange = [0, 5, 10, 15, 20];
 	const adjustments = ['lighten', 'darken', false];
 
@@ -38,6 +39,14 @@ export function generateRandomColor() {
 	return nextRandomColor;
 }
 
+function getAccent(complement) {
+	const [color, accent1, accent2] = complement;
+	const score1 = colorize.readability(color, accent1);
+	const score2 = colorize.readability(color, accent2);
+
+	return score1 > score2 ? accent1 : accent2;
+}
+
 export function generateColors(nextColor, options = {}) {
 	const defaultOptions = { debug: false };
 	const mergedOptions = { ...defaultOptions, ...options };
@@ -46,7 +55,8 @@ export function generateColors(nextColor, options = {}) {
 	const data = colorize(nextColor).splitcomplement();
 	const complement = data.map(d => d.toHexString());
 
-	let [color, accent, text] = complement;
+	let [color, , text] = complement;
+	let accent = getAccent(complement);
 	const isLight = colorize.isReadable('#000', color, {
 		level: 'AAA',
 		size: 'small',
@@ -60,7 +70,7 @@ export function generateColors(nextColor, options = {}) {
 		accent = colorize
 			.mostReadable(color, [accent], {
 				includeFallbackColors: true,
-				level: 'AA',
+				level: 'AAA',
 				size: 'large',
 			})
 			.toHexString();
