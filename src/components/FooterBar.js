@@ -12,6 +12,7 @@ export default function FooterBar({
 	onGenerateRandomColors = noop,
 	onGenerateSimilarColors = noop,
 	setNewColors = noop,
+	mainColor,
 	uiColor,
 }) {
 	return (
@@ -31,8 +32,7 @@ export default function FooterBar({
 					<Flexy.Item>
 						<SwatchContainer>
 							<SwatchPicker
-								color={uiColor}
-								isPrimary
+								color={mainColor}
 								setNewColors={setNewColors}
 								placement="top"
 								textAlign="center"

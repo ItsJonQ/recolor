@@ -6,14 +6,6 @@ import Label from './Label';
 import View from './View';
 import { transitions } from '../styles/transitions';
 
-const isPrimary = ({ isPrimary }) => {
-	if (!isPrimary) return '';
-	return `
-		background-color: var(--mainColor);
-		border: 2px solid var(--uiColor);
-	`;
-};
-
 export default function Swatch(props) {
 	const { color, label, ...restProps } = props;
 
@@ -39,7 +31,6 @@ const SwatchCard = styled(Card)`
 	width: calc(48px + var(--padding) * 2);
 
 	${transitions};
-	${isPrimary};
 
 	@media (min-width: 768px) {
 		width: calc(60px + var(--padding) * 2);

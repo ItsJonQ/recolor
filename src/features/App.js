@@ -53,6 +53,7 @@ function App() {
 				{...{
 					onGenerateRandomColors: generateRandomColors,
 					onGenerateSimilarColors: generateSimilarColors,
+					mainColor,
 					uiColor,
 					setNewColors,
 				}}

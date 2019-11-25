@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import colorize from 'tinycolor2';
 import queryString from 'query-string';
 
@@ -19,6 +19,7 @@ const BASE_TITLE = 'Recolor';
 export function useStore() {
 	const { history } = useRouter();
 
+	// STATE
 	const [mainColor, setMainColor] = useState(initialColors.color);
 	const [accentColor, setAccentColor] = useState(initialColors.accent);
 	const [textColor, setTextColor] = useState(initialColors.text);
@@ -26,12 +27,73 @@ export function useStore() {
 	const [titleFont, setTitleFont] = useState(generateRandomFont());
 	const [bodyFont, setBodyFont] = useState(generateRandomFont());
 
+	// ACTIONS
+	const generateRandomFonts = () => {
+		setTitleFont(generateRandomFont());
+		setBodyFont(generateRandomFont());
+	};
+
+	const setNewColors = useCallback(
+		newColor => {
+			const colorData = generateColors(newColor);
+			const { color, accent, text, ui } = colorData;
+			setMainColor(color);
+			setAccentColor(accent);
+			setTextColor(text);
+			setUiColor(ui);
+		},
+		[setMainColor, setAccentColor, setTextColor, setUiColor]
+	);
+
+	const generateRandomColors = useCallback(() => {
+		setNewColors(generateRandomColor());
+	}, [setNewColors]);
+
+	const generateSimilarColors = useCallback(() => {
+		const nextColors = colorize(mainColor)
+			.analogous()
+			.map(c => c.toHexString());
+		const [, nextColor] = nextColors;
+		setNewColors(nextColor);
+	}, [setNewColors, mainColor]);
+
+	const lightenColors = () => {
+		const nextColor = colorize(mainColor)
+			.lighten(10)
+			.toHexString();
+		const colorData = generateColors(nextColor);
+		setNewColors(colorData);
+	};
+
+	const darkenColors = () => {
+		const nextColor = colorize(mainColor)
+			.darken(10)
+			.toHexString();
+		const colorData = generateColors(nextColor);
+		setNewColors(colorData);
+	};
+
+	// EFFECTS
 	useEffect(() => {
-		const didReloadPage = performance && performance.navigation.type === 1;
-		if (didReloadPage) {
-			window.document.location.search = '';
-		}
-	}, []);
+		const handleOnKeyDown = event => {
+			const { key } = event;
+			switch (key) {
+				case 'ArrowRight':
+					generateSimilarColors();
+					break;
+				case 'ArrowLeft':
+					generateRandomColors();
+					break;
+				default:
+					break;
+			}
+		};
+		document.addEventListener('keydown', handleOnKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleOnKeyDown);
+		};
+	}, [generateRandomColors, generateSimilarColors]);
 
 	useEffect(() => {
 		document.title = createPageTitle(mainColor);
@@ -55,48 +117,6 @@ export function useStore() {
 			bodyFont,
 		});
 	}, [mainColor, accentColor, textColor, uiColor, titleFont, bodyFont]);
-
-	const generateRandomFonts = () => {
-		setTitleFont(generateRandomFont());
-		setBodyFont(generateRandomFont());
-	};
-
-	const setNewColors = newColor => {
-		const colorData = generateColors(newColor);
-		const { color, accent, text, ui } = colorData;
-		setMainColor(color);
-		setAccentColor(accent);
-		setTextColor(text);
-		setUiColor(ui);
-	};
-
-	const generateRandomColors = () => {
-		setNewColors(generateRandomColor());
-	};
-
-	const generateSimilarColors = () => {
-		const nextColors = colorize(mainColor)
-			.analogous()
-			.map(c => c.toHexString());
-		const [, nextColor] = nextColors;
-		setNewColors(nextColor);
-	};
-
-	const lightenColors = () => {
-		const nextColor = colorize(mainColor)
-			.lighten(10)
-			.toHexString();
-		const colorData = generateColors(nextColor);
-		setNewColors(colorData);
-	};
-
-	const darkenColors = () => {
-		const nextColor = colorize(mainColor)
-			.darken(10)
-			.toHexString();
-		const colorData = generateColors(nextColor);
-		setNewColors(colorData);
-	};
 
 	return {
 		// STATE
