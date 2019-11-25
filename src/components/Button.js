@@ -35,12 +35,13 @@ const Button = styled.button`
 	padding: 8px 12px;
 	position: relative;
 	text-align: center;
+	text-transform: uppercase;
 	user-select: none;
 	vertical-align: middle;
 	white-space: nowrap;
 
 	&:focus {
-		outline: 2px dotted;
+		outline: 2px dotted var(--accentColor);
 		z-index: 1;
 	}
 
