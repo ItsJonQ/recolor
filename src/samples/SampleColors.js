@@ -12,7 +12,7 @@ import Section from '../components/Section';
 import Viewport from '../components/Viewport';
 import View from '../components/View';
 
-function MainColorSwatch({ uiColor, mainColor, setNewColors }) {
+function MainColorSwatch({ mainColor, setNewColors }) {
 	const [isOpen, setOpen] = useState(false);
 	const popperRef = useRef(null);
 
@@ -51,11 +51,7 @@ function MainColorSwatch({ uiColor, mainColor, setNewColors }) {
 						onClick={() => setOpen(true)}
 						style={{ cursor: 'pointer' }}
 					>
-						<Swatch
-							bgColor={uiColor}
-							label="Main"
-							color={mainColor}
-						/>
+						<Swatch label="Main" color={mainColor} />
 					</View>
 				)}
 			</Reference>
@@ -94,18 +90,17 @@ function Swatches({
 			<Box mb={2}>
 				<MainColorSwatch
 					mainColor={mainColor}
-					uiColor={uiColor}
 					setNewColors={setNewColors}
 				/>
 			</Box>
 			<Box mb={2}>
-				<Swatch bgColor={uiColor} label="Accent" color={accentColor} />
+				<Swatch label="Accent" color={accentColor} />
 			</Box>
 			<Box mb={2}>
-				<Swatch bgColor={uiColor} label="Text" color={textColor} />
+				<Swatch label="Text" color={textColor} />
 			</Box>
 			<Box mb={2}>
-				<Swatch bgColor={uiColor} label="UI" color={uiColor} />
+				<Swatch label="UI" color={uiColor} />
 			</Box>
 		</>
 	);

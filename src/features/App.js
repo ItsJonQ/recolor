@@ -22,18 +22,8 @@ function App() {
 		generateRandomFonts,
 		generateRandomColors,
 		generateSimilarColors,
-		lightenColors,
-		darkenColors,
 		setNewColors,
 	} = useStore();
-
-	const actions = {
-		onDarkenColors: darkenColors,
-		onGenerateRandomColors: generateRandomColors,
-		onGenerateRandomFonts: generateRandomFonts,
-		onGenerateSimilarColors: generateSimilarColors,
-		onLightenColors: lightenColors,
-	};
 
 	return (
 		<>
@@ -50,14 +40,21 @@ function App() {
 				/>
 				<Spacer size="md">
 					<SampleTypography
-						{...{ bodyFont, titleFont, accentColor }}
+						{...{
+							bodyFont,
+							titleFont,
+							accentColor,
+							onGenerateRandomFonts: generateRandomFonts,
+						}}
 					/>
 				</Spacer>
 			</Layout>
 			<FooterBar
 				{...{
-					...actions,
+					onGenerateRandomColors: generateRandomColors,
+					onGenerateSimilarColors: generateSimilarColors,
 					uiColor,
+					setNewColors,
 				}}
 			/>
 		</>

@@ -6,57 +6,50 @@ import Card from './Card';
 import View from './View';
 import Button from './Button';
 import Flexy from './Flexy';
-import Label from './Label';
-import Viewport from './Viewport';
+import SwatchPicker from './SwatchPicker';
 
 export default function FooterBar({
 	onGenerateRandomColors = noop,
 	onGenerateSimilarColors = noop,
-	onDarkenColors = noop,
-	onLightenColors = noop,
-	onGenerateRandomFonts = noop,
+	setNewColors = noop,
 	uiColor,
 }) {
 	return (
 		<Bar bg={uiColor}>
 			<Container>
 				<Flexy>
+					<Flexy.Block />
 					<Flexy.Item>
-						<Label isMuted size="sm">
-							Colors
-						</Label>
-						<Flexy>
-							<Flexy.Item>
-								<Button
-									isPrimary
-									onClick={onGenerateRandomColors}
-								>
-									Generate
-								</Button>
-							</Flexy.Item>
-							<Viewport.Desktop>
-								<Flexy.Item>
-									<Button onClick={onGenerateSimilarColors}>
-										Refine
-									</Button>
-								</Flexy.Item>
-								<Flexy.Item>
-									<Button onClick={onDarkenColors}>
-										Darken
-									</Button>
-									<Button onClick={onLightenColors}>
-										Lighten
-									</Button>
-								</Flexy.Item>
-							</Viewport.Desktop>
-						</Flexy>
+						<Button
+							onClick={onGenerateRandomColors}
+							width={100}
+							size="lg"
+						>
+							Regen
+						</Button>
 					</Flexy.Item>
 					<Flexy.Item>
-						<Label isMuted size="sm" textAlign="right">
-							Fonts
-						</Label>
-						<Button onClick={onGenerateRandomFonts}>Remix</Button>
+						<SwatchContainer>
+							<SwatchPicker
+								color={uiColor}
+								isPrimary
+								setNewColors={setNewColors}
+								placement="top"
+								textAlign="center"
+							/>
+						</SwatchContainer>
 					</Flexy.Item>
+					<Flexy.Item>
+						<Button
+							onClick={onGenerateSimilarColors}
+							width={100}
+							isPrimary
+							size="lg"
+						>
+							Refine
+						</Button>
+					</Flexy.Item>
+					<Flexy.Block />
 				</Flexy>
 			</Container>
 		</Bar>
@@ -68,7 +61,13 @@ const Bar = styled(Card)`
 	bottom: 0;
 	left: 0;
 	right: 0;
-	padding: 32px 0px;
+	padding: 8px 0px;
+`;
+
+const SwatchContainer = styled(View)`
+	position: relative;
+	top: -24px;
+	margin-bottom: -40px;
 `;
 
 const Container = styled(View)`

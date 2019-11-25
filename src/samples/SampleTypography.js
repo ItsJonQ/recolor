@@ -1,18 +1,35 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { noop } from 'lodash';
 
 import Alphabet from '../components/Alphabet';
+import Button from '../components/Button';
+import Flexy from '../components/Flexy';
 import Label from '../components/Label';
 import LoremBody from '../components/LoremBody';
 import LoremTitle from '../components/LoremTitle';
 import Spacer from '../components/Spacer';
 import Section from '../components/Section';
 
-export default function SampleTypography({ accentColor, titleFont, bodyFont }) {
+export default function SampleTypography({
+	accentColor,
+	titleFont,
+	bodyFont,
+	onGenerateRandomFonts = noop,
+}) {
 	return (
 		<>
 			<Spacer size="md">
-				<Label isMuted>Typography</Label>
+				<Flexy>
+					<Flexy.Item>
+						<Label isMuted mb={0}>
+							Typography
+						</Label>
+					</Flexy.Item>
+					<Flexy.Item>
+						<Button onClick={onGenerateRandomFonts}>Retype</Button>
+					</Flexy.Item>
+				</Flexy>
 			</Spacer>
 			<SectionContainer>
 				<Body>
@@ -72,6 +89,6 @@ const Body = styled.div`
 const Sidebar = styled.div`
 	@media (min-width: ${MQ}) {
 		margin-left: 32px;
-		width: 300px;
+		width: 320px;
 	}
 `;

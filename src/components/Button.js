@@ -1,5 +1,18 @@
 import styled from '@emotion/styled';
 
+const toPx = value => (typeof value === 'number' ? `${value}px` : value);
+
+const width = ({ width = 'auto' }) => `width: ${toPx(width)};`;
+const size = ({ size = 'md' }) => {
+	const sizes = {
+		lg: '12px 20px',
+		md: '8px 12px',
+		sm: '4px 8px',
+	};
+
+	return `padding: ${sizes[size]};`;
+};
+
 const isPrimary = ({ isPrimary }) => {
 	if (!isPrimary) return '';
 	return `
@@ -31,6 +44,8 @@ const Button = styled.button`
 		z-index: 1;
 	}
 
+	${size};
+	${width};
 	${isPrimary};
 
 	& + & {

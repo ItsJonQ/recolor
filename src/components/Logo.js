@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { transitions } from '../styles/transitions';
 
 export default function Logo() {
 	return (
 		<LogoText>
-			<span>⏣</span> Chroma
+			<span>RE</span>COLOR
 		</LogoText>
 	);
 }
@@ -16,10 +17,7 @@ const LogoText = styled.div`
 	text-transform: uppercase;
 
 	span {
+		${transitions};
 		color: var(--accentColor);
-		position: relative;
-		top: 0px;
-		font-size: 18px;
-		margin-right: 3px;
 	}
 `;

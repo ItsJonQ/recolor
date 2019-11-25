@@ -14,7 +14,7 @@ import {
 const initialColor = getInitialColor();
 const initialColors = generateColors(initialColor);
 
-const BASE_TITLE = 'Chroma';
+const BASE_TITLE = 'Recolor';
 
 export function useStore() {
 	const { history } = useRouter();

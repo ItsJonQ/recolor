@@ -6,11 +6,19 @@ import Label from './Label';
 import View from './View';
 import { transitions } from '../styles/transitions';
 
+const isPrimary = ({ isPrimary }) => {
+	if (!isPrimary) return '';
+	return `
+		background-color: var(--mainColor);
+		border: 2px solid var(--uiColor);
+	`;
+};
+
 export default function Swatch(props) {
-	const { bgColor, color, label } = props;
+	const { color, label, ...restProps } = props;
 
 	return (
-		<SwatchCard bg={bgColor}>
+		<SwatchCard {...restProps}>
 			<Color bg={color} />
 			<View pt={1}>
 				<Label size="xs" mb={0}>
@@ -25,10 +33,13 @@ export default function Swatch(props) {
 }
 
 const SwatchCard = styled(Card)`
-	${transitions};
+	background-color: var(--uiColor);
 	--padding: 4px;
 	padding: var(--padding);
 	width: calc(48px + var(--padding) * 2);
+
+	${transitions};
+	${isPrimary};
 
 	@media (min-width: 768px) {
 		width: calc(60px + var(--padding) * 2);
@@ -37,12 +48,8 @@ const SwatchCard = styled(Card)`
 
 const Color = styled(View)`
 	${transitions};
-	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset;
 	height: 0;
-	padding-bottom: 65%;
+	padding-bottom: 75%;
 	width: 100%;
-
-	@media (min-width: 768px) {
-		padding-bottom: 75%;
-	}
 `;

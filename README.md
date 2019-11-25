@@ -1,3 +1,3 @@
-# Chroma
+# Recolor
 
-> Color x Typography Generator
+> A Delightful Color Generator
