@@ -70,8 +70,8 @@ export function generateColors(nextColor, options = {}) {
 		accent = colorize
 			.mostReadable(color, [accent], {
 				includeFallbackColors: true,
-				level: 'AAA',
-				size: 'large',
+				level: 'AA',
+				size: 'small',
 			})
 			.toHexString();
 
