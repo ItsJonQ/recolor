@@ -2,11 +2,12 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { noop } from 'lodash';
 
-import Card from './Card';
-import View from './View';
 import Button from './Button';
+import Card from './Card';
 import Flexy from './Flexy';
 import SwatchPicker from './SwatchPicker';
+import View from './View';
+import Viewport from './Viewport';
 
 export default function FooterBar({
 	onGenerateRandomColors = noop,
@@ -19,17 +20,19 @@ export default function FooterBar({
 		<Bar bg={uiColor}>
 			<Container>
 				<Flexy>
-					<Flexy.Item>
-						<SwatchContainer>
-							<SwatchPicker
-								color={mainColor}
-								setNewColors={setNewColors}
-								placement="top-start"
-								textAlign="center"
-							/>
-						</SwatchContainer>
-					</Flexy.Item>
-					<Flexy>
+					<Viewport.Desktop>
+						<Flexy.Item>
+							<SwatchContainer>
+								<SwatchPicker
+									color={mainColor}
+									setNewColors={setNewColors}
+									placement="top-start"
+									textAlign="center"
+								/>
+							</SwatchContainer>
+						</Flexy.Item>
+					</Viewport.Desktop>
+					<ActionWrapper>
 						<Flexy.Item>
 							<ActionButton
 								onClick={onGenerateSimilarColors}
@@ -39,6 +42,9 @@ export default function FooterBar({
 								Refine
 							</ActionButton>
 						</Flexy.Item>
+						<Viewport.Mobile>
+							<Flexy.Block />
+						</Viewport.Mobile>
 						<Flexy.Item>
 							<ActionButton
 								onClick={onGenerateRandomColors}
@@ -49,15 +55,29 @@ export default function FooterBar({
 								Regen
 							</ActionButton>
 						</Flexy.Item>
-					</Flexy>
+					</ActionWrapper>
 				</Flexy>
 			</Container>
 		</Bar>
 	);
 }
 
+function ActionWrapper({ children }) {
+	return (
+		<>
+			<Viewport.Mobile>{children}</Viewport.Mobile>
+			<Viewport.Desktop>
+				<Flexy>
+					<Flexy.Block />
+					{children}
+				</Flexy>
+			</Viewport.Desktop>
+		</>
+	);
+}
+
 const ActionButton = styled(Button)`
-	width: 110px;
+	width: 140px;
 
 	@media (min-width: 768px) {
 		width: 150px;
