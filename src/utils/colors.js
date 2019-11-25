@@ -38,11 +38,15 @@ export function generateRandomColor() {
 	return nextRandomColor;
 }
 
-export function generateColors(nextColor) {
-	const data = colorize(nextColor).splitcomplement();
-	const triad = data.map(d => d.toHexString());
+export function generateColors(nextColor, options = {}) {
+	const defaultOptions = { debug: false };
+	const mergedOptions = { ...defaultOptions, ...options };
+	const { debug } = mergedOptions;
 
-	let [color, accent, text] = triad;
+	const data = colorize(nextColor).splitcomplement();
+	const complement = data.map(d => d.toHexString());
+
+	let [color, accent, text] = complement;
 	const isLight = colorize.isReadable('#000', color, {
 		level: 'AAA',
 		size: 'small',
@@ -82,12 +86,26 @@ export function generateColors(nextColor) {
 		ui = ui.darken(20).toHexString();
 	}
 
-	return {
+	const colors = {
 		color,
 		accent,
 		text,
 		isLight,
 		ui,
+	};
+
+	if (!debug) {
+		return colors;
+	}
+
+	const debugData = {
+		complement,
+		isLight,
+	};
+
+	return {
+		...colors,
+		debug: debugData,
 	};
 }
 

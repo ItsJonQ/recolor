@@ -4,6 +4,7 @@ import View from './View';
 
 const gap = ({ gap = 'md' }) => {
 	const gaps = {
+		xxl: '32px',
 		xl: '20px',
 		lg: '16px',
 		md: '12px',
@@ -23,12 +24,40 @@ const gap = ({ gap = 'md' }) => {
 	`;
 };
 
-const Flexy = styled(View)`
-	align-items: center;
-	display: flex;
-	justify-content: space-between;
+const align = ({ align = 'center' }) => {
+	const aligns = {
+		top: 'flex-start',
+		center: 'center',
+		middle: 'center',
+		bottom: 'flex-end',
+	};
+	const value = aligns[align];
 
+	return css`
+		align-items: ${value};
+	`;
+};
+
+const justify = ({ justify = 'snap' }) => {
+	const justifies = {
+		left: 'flex-start',
+		center: 'center',
+		middle: 'center',
+		right: 'flex-end',
+		snap: 'space-between',
+	};
+	const value = justifies[justify];
+
+	return css`
+		justify-content: ${value};
+	`;
+};
+
+const Flexy = styled(View)`
+	display: flex;
+	${align};
 	${gap};
+	${justify};
 `;
 
 const Item = styled(View)`

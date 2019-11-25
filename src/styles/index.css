@@ -3,8 +3,19 @@
 }
 
 :root {
+	--mainColor: black;
+	--textColor: white;
+	--accentColor: white;
+	--uiColor: black;
+
 	--fontFamilyCode: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
 		monospace;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0;
 }
 
 body {
