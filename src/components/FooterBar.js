@@ -21,13 +21,13 @@ export default function FooterBar({
 				<Flexy>
 					<Flexy.Block />
 					<Flexy.Item>
-						<Button
+						<ActionButton
 							onClick={onGenerateSimilarColors}
 							width={100}
 							size="lg"
 						>
 							Refine
-						</Button>
+						</ActionButton>
 					</Flexy.Item>
 					<Flexy.Item>
 						<SwatchContainer>
@@ -40,14 +40,14 @@ export default function FooterBar({
 						</SwatchContainer>
 					</Flexy.Item>
 					<Flexy.Item>
-						<Button
+						<ActionButton
 							onClick={onGenerateRandomColors}
 							width={100}
 							isPrimary
 							size="lg"
 						>
 							Regen
-						</Button>
+						</ActionButton>
 					</Flexy.Item>
 					<Flexy.Block />
 				</Flexy>
@@ -55,6 +55,14 @@ export default function FooterBar({
 		</Bar>
 	);
 }
+
+const ActionButton = styled(Button)`
+	width: 100px;
+
+	@media (min-width: 768px) {
+		width: 140px;
+	}
+`;
 
 const Bar = styled(Card)`
 	position: fixed;
