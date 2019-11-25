@@ -22,11 +22,11 @@ export default function FooterBar({
 					<Flexy.Block />
 					<Flexy.Item>
 						<Button
-							onClick={onGenerateRandomColors}
+							onClick={onGenerateSimilarColors}
 							width={100}
 							size="lg"
 						>
-							Regen
+							Refine
 						</Button>
 					</Flexy.Item>
 					<Flexy.Item>
@@ -41,12 +41,12 @@ export default function FooterBar({
 					</Flexy.Item>
 					<Flexy.Item>
 						<Button
-							onClick={onGenerateSimilarColors}
+							onClick={onGenerateRandomColors}
 							width={100}
 							isPrimary
 							size="lg"
 						>
-							Refine
+							Regen
 						</Button>
 					</Flexy.Item>
 					<Flexy.Block />

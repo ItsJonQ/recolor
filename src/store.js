@@ -78,10 +78,10 @@ export function useStore() {
 		const handleOnKeyDown = event => {
 			const { key } = event;
 			switch (key) {
-				case 'ArrowRight':
+				case 'ArrowLeft':
 					generateSimilarColors();
 					break;
-				case 'ArrowLeft':
+				case 'ArrowRight':
 					generateRandomColors();
 					break;
 				default:
