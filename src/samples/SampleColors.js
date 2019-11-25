@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Manager, Reference, Popper } from 'react-popper';
-import { SketchPicker } from 'react-color';
 
 import Box from '../components/View';
-import Label from '../components/Label';
+import ColorPicker from '../components/ColorPicker';
 import Flexy from '../components/Flexy';
+import Label from '../components/Label';
+import Section from '../components/Section';
 import Spacer from '../components/Spacer';
 import Swatch from '../components/Swatch';
-import Section from '../components/Section';
-import Viewport from '../components/Viewport';
 import View from '../components/View';
+import Viewport from '../components/Viewport';
 
 function MainColorSwatch({ mainColor, setNewColors }) {
 	const [isOpen, setOpen] = useState(false);
@@ -64,7 +64,7 @@ function MainColorSwatch({ mainColor, setNewColors }) {
 								style={{ ...style, zIndex: 8 }}
 								data-placement={placement}
 							>
-								<SketchPicker
+								<ColorPicker
 									disableAlpha={true}
 									color={mainColor}
 									onChangeComplete={handleOnChange}

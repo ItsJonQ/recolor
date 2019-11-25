@@ -60,7 +60,7 @@ export default function SwatchPicker({
 						<View ref={popperRef}>
 							<View
 								ref={ref}
-								style={{ ...style, zIndex: 8 }}
+								style={style}
 								data-placement={placement}
 							>
 								<ColorPicker

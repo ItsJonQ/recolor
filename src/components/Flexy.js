@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 import View from './View';
 
 const gap = ({ gap = 'md' }) => {
@@ -12,14 +13,14 @@ const gap = ({ gap = 'md' }) => {
 	};
 	const value = gaps[gap];
 
-	return `
-        & > * {
-            margin-right: ${value};
-            &:last-child {
-                margin-right: 0;
-            }
-        }
-    `;
+	return css`
+		& > * {
+			margin-right: ${value};
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	`;
 };
 
 const Flexy = styled(View)`

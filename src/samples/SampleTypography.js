@@ -27,7 +27,12 @@ export default function SampleTypography({
 						</Label>
 					</Flexy.Item>
 					<Flexy.Item>
-						<Button onClick={onGenerateRandomFonts}>Retype</Button>
+						<Button
+							onClick={onGenerateRandomFonts}
+							variant="secondary"
+						>
+							Retype
+						</Button>
 					</Flexy.Item>
 				</Flexy>
 			</Spacer>

@@ -1,3 +1,4 @@
+import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
 const toPx = value => (typeof value === 'number' ? `${value}px` : value);
@@ -10,15 +11,32 @@ const size = ({ size = 'md' }) => {
 		sm: '4px 8px',
 	};
 
-	return `padding: ${sizes[size]};`;
+	return css`
+		padding: ${sizes[size]};
+	`;
 };
 
-const isPrimary = ({ isPrimary }) => {
-	if (!isPrimary) return '';
-	return `
-        background-color: var(--accentColor);
-        color: var(--uiColor);
-    `;
+const variant = ({ variant = 'default' }) => {
+	switch (variant) {
+		case 'primary':
+			return css`
+				background-color: var(--accentColor);
+				color: var(--uiColor);
+			`;
+		case 'secondary':
+			return css`
+				border-color: transparent;
+				text-decoration: underline;
+
+				&:hover,
+				&:active,
+				&:focus {
+					border-color: var(--textColor);
+				}
+			`;
+		default:
+			return '';
+	}
 };
 
 const Button = styled.button`
@@ -47,7 +65,7 @@ const Button = styled.button`
 
 	${size};
 	${width};
-	${isPrimary};
+	${variant};
 
 	& + & {
 		margin-left: -2px;

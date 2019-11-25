@@ -1,7 +1,15 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 import View from './View';
 
-const isMuted = ({ isMuted }) => isMuted && `opacity: 0.5;`;
+const isMuted = ({ isMuted }) => {
+	if (!isMuted) return '';
+
+	return css`
+		opacity: 0.5;
+	`;
+};
+
 const size = ({ size = 'md' }) => {
 	const sizes = {
 		md: '12px',
@@ -9,7 +17,9 @@ const size = ({ size = 'md' }) => {
 		xs: '10px',
 	};
 
-	return `font-size: ${sizes[size]}`;
+	return css`
+		font-size: ${sizes[size]};
+	`;
 };
 
 const Label = styled(View)`

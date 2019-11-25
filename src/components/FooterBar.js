@@ -19,37 +19,37 @@ export default function FooterBar({
 		<Bar bg={uiColor}>
 			<Container>
 				<Flexy>
-					<Flexy.Block />
-					<Flexy.Item>
-						<ActionButton
-							onClick={onGenerateSimilarColors}
-							width={100}
-							size="lg"
-						>
-							Refine
-						</ActionButton>
-					</Flexy.Item>
 					<Flexy.Item>
 						<SwatchContainer>
 							<SwatchPicker
 								color={mainColor}
 								setNewColors={setNewColors}
-								placement="top"
+								placement="top-start"
 								textAlign="center"
 							/>
 						</SwatchContainer>
 					</Flexy.Item>
-					<Flexy.Item>
-						<ActionButton
-							onClick={onGenerateRandomColors}
-							width={100}
-							isPrimary
-							size="lg"
-						>
-							Regen
-						</ActionButton>
-					</Flexy.Item>
-					<Flexy.Block />
+					<Flexy>
+						<Flexy.Item>
+							<ActionButton
+								onClick={onGenerateSimilarColors}
+								width={100}
+								size="lg"
+							>
+								Refine
+							</ActionButton>
+						</Flexy.Item>
+						<Flexy.Item>
+							<ActionButton
+								onClick={onGenerateRandomColors}
+								width={100}
+								variant="primary"
+								size="lg"
+							>
+								Regen
+							</ActionButton>
+						</Flexy.Item>
+					</Flexy>
 				</Flexy>
 			</Container>
 		</Bar>
@@ -57,10 +57,10 @@ export default function FooterBar({
 }
 
 const ActionButton = styled(Button)`
-	width: 100px;
+	width: 110px;
 
 	@media (min-width: 768px) {
-		width: 140px;
+		width: 150px;
 	}
 `;
 
@@ -70,6 +70,7 @@ const Bar = styled(Card)`
 	left: 0;
 	right: 0;
 	padding: 8px 0px;
+	z-index: 20;
 `;
 
 const SwatchContainer = styled(View)`
