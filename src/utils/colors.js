@@ -32,12 +32,36 @@ const BRIGHTNESS_TWEAK = 10;
 const SATURATION_TWEAK = 20;
 const UI_BRIGHTNESS_TWEAK = 15;
 
+const DARKEN_VARIANT_RANGE = [20, 30, 40, 50];
+const DARKEN_TEXT_VARIANT_RANGE = [20, 30, 40, 50, 55, 60, 65, 70, 80];
+
+const LIGHTEN_VARIANT_RANGE = [10, 20, 25, 30, 35, 40];
+const LIGHTEN_TEXT_VARIANT_RANGE = [10, 20, 25, 30, 35, 40, 50, 60, 70];
+
+const ALT_VARIANT_RANGE = [0, 3, 6];
+
 function isNotBlack(color) {
 	return color.toLowerCase() !== BLACK;
 }
 
 function isNotWhite(color) {
 	return color.toLowerCase() !== WHITE;
+}
+
+function createDarkenToSting(color) {
+	return value => {
+		return colorize(color)
+			.darken(value)
+			.toHexString();
+	};
+}
+
+function createLightenToSting(color) {
+	return value => {
+		return colorize(color)
+			.lighten(value)
+			.toHexString();
+	};
 }
 
 function shouldRegenerateColor(color) {
@@ -141,31 +165,31 @@ export function generateColors(nextColor, options = {}) {
 	const data = colorize(nextColor).splitcomplement();
 	const complement = data.map(d => d.toHexString());
 
-	let [color, accent] = complement;
+	let [color, accent, accent2] = complement;
 	let text = color;
 
 	const isLight = colorize.isReadable(BLACK, color, IS_READABLE_OPTIONS);
 	const hueName = getColorHueName(color);
 
 	if (isLight) {
-		const darkenVariants = [20, 30, 40, 50, 55, 60, 65]
-			.map(av =>
-				colorize(accent)
-					.darken(av)
-					.toHexString()
-			)
+		const darkenVariants = [...DARKEN_VARIANT_RANGE]
+			.map(createDarkenToSting(accent))
 			.filter(isNotBlack);
 
-		const darkenTextVariants = [20, 30, 40, 50, 55, 60, 65, 70, 80]
-			.map(av =>
-				colorize(text)
-					.darken(av)
-					.toHexString()
-			)
+		const darkenVariants2 = [...ALT_VARIANT_RANGE]
+			.map(createDarkenToSting(accent2))
+			.filter(isNotBlack);
+
+		const darkenTextVariants = [...DARKEN_TEXT_VARIANT_RANGE]
+			.map(createDarkenToSting(text))
 			.filter(isNotBlack);
 
 		accent = colorize
-			.mostReadable(color, darkenVariants, MOST_READABLE_OPTIONS)
+			.mostReadable(
+				color,
+				[...darkenVariants, ...darkenVariants2],
+				MOST_READABLE_OPTIONS
+			)
 			.saturate(SATURATION_TWEAK)
 			.toHexString();
 
@@ -173,24 +197,24 @@ export function generateColors(nextColor, options = {}) {
 			.mostReadable(color, darkenTextVariants, MOST_READABLE_OPTIONS)
 			.toHexString();
 	} else {
-		const lightenVariants = [10, 20, 25, 30, 35, 40]
-			.map(av =>
-				colorize(accent)
-					.lighten(av)
-					.toHexString()
-			)
+		const lightenVariants = [...LIGHTEN_VARIANT_RANGE]
+			.map(createLightenToSting(accent))
 			.filter(isNotWhite);
 
-		const lightenTextVariants = [10, 20, 25, 30, 35, 40, 50, 60, 70]
-			.map(av =>
-				colorize(text)
-					.lighten(av)
-					.toHexString()
-			)
+		const lightenVariants2 = [...ALT_VARIANT_RANGE]
+			.map(createLightenToSting(accent2))
+			.filter(isNotWhite);
+
+		const lightenTextVariants = [...LIGHTEN_TEXT_VARIANT_RANGE]
+			.map(createLightenToSting(text))
 			.filter(isNotWhite);
 
 		accent = colorize
-			.mostReadable(color, lightenVariants, MOST_READABLE_OPTIONS)
+			.mostReadable(
+				color,
+				[...lightenVariants, ...lightenVariants2],
+				MOST_READABLE_OPTIONS
+			)
 			.saturate(SATURATION_TWEAK)
 			.toHexString();
 

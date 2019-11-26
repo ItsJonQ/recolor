@@ -3,6 +3,7 @@ import React from 'react';
 import AppBar from '../components/AppBar';
 import FooterBar from '../components/FooterBar';
 import Layout from '../components/Layout';
+import Page from '../components/Page';
 import SampleColors from '../samples/SampleColors';
 import SampleTypography from '../samples/SampleTypography';
 import Spacer from '../components/Spacer';
@@ -29,25 +30,27 @@ function App() {
 		<>
 			<AppBar />
 			<Layout>
-				<SampleColors
-					{...{
-						accentColor,
-						mainColor,
-						textColor,
-						uiColor,
-						setNewColors,
-					}}
-				/>
-				<Spacer size="md">
-					<SampleTypography
+				<Page>
+					<SampleColors
 						{...{
-							bodyFont,
-							titleFont,
 							accentColor,
-							onGenerateRandomFonts: generateRandomFonts,
+							mainColor,
+							textColor,
+							uiColor,
+							setNewColors,
 						}}
 					/>
-				</Spacer>
+					<Spacer size="md">
+						<SampleTypography
+							{...{
+								bodyFont,
+								titleFont,
+								accentColor,
+								onGenerateRandomFonts: generateRandomFonts,
+							}}
+						/>
+					</Spacer>
+				</Page>
 			</Layout>
 			<FooterBar
 				{...{

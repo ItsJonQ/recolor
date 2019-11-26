@@ -21,8 +21,8 @@ body {
 body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background: var(--mainColor, black);
-	color: var(--textColor, white);
+	background: var(--bodyBackgroundColor, var(--mainColor, black));
+	color: var(--bodyTextColor, var(--textColor, white));
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
 		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
 		'Helvetica Neue', sans-serif;

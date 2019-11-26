@@ -3,8 +3,8 @@ import View from './View';
 
 const Layout = styled(View)`
 	max-width: 920px;
-	padding: 20px 20px 100px;
-	margin: 50px auto;
+	padding: 0;
+	margin: 0 auto;
 
 	@media (min-width: 768px) {
 		margin-top: 72px;
@@ -12,6 +12,7 @@ const Layout = styled(View)`
 	}
 
 	@media (min-width: 1120px) {
+		margin-top: 0;
 		padding-left: 20px;
 	}
 `;
