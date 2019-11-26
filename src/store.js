@@ -1,20 +1,22 @@
 import { useCallback, useState, useEffect } from 'react';
-import colorize from 'tinycolor2';
 import queryString from 'query-string';
 
 import { useRouter } from './utils/hooks';
 
 import {
-	generateRandomColor,
+	createPageTitle,
+	darkenColor,
 	generateColors,
+	generateRandomColor,
 	generateRandomFont,
+	getInitialColorFromUrl,
+	lightenColor,
+	refineColor,
 	setColorProperties,
 } from './utils';
 
-const initialColor = getInitialColor();
+const initialColor = getInitialColorFromUrl();
 const initialColors = generateColors(initialColor);
-
-const BASE_TITLE = 'Recolor';
 
 export function useStore() {
 	const { history } = useRouter();
@@ -50,27 +52,18 @@ export function useStore() {
 	}, [setNewColors]);
 
 	const generateSimilarColors = useCallback(() => {
-		const nextColors = colorize(mainColor)
-			.analogous()
-			.map(c => c.toHexString());
-		const [, nextColor] = nextColors;
+		const nextColor = refineColor(mainColor);
 		setNewColors(nextColor);
 	}, [setNewColors, mainColor]);
 
 	const lightenColors = () => {
-		const nextColor = colorize(mainColor)
-			.lighten(10)
-			.toHexString();
-		const colorData = generateColors(nextColor);
-		setNewColors(colorData);
+		const nextColor = lightenColor(mainColor);
+		setNewColors(nextColor);
 	};
 
 	const darkenColors = () => {
-		const nextColor = colorize(mainColor)
-			.darken(10)
-			.toHexString();
-		const colorData = generateColors(nextColor);
-		setNewColors(colorData);
+		const nextColor = darkenColor(mainColor);
+		setNewColors(nextColor);
 	};
 
 	// EFFECTS
@@ -134,19 +127,4 @@ export function useStore() {
 		darkenColors,
 		setNewColors,
 	};
-}
-
-function createPageTitle(color) {
-	return `${BASE_TITLE} || ${color}`;
-}
-
-function getInitialColor() {
-	const { color } = queryString.parse(window.location.search);
-	const initialColorData = colorize(color);
-
-	if (!initialColorData._ok) {
-		return generateRandomColor();
-	}
-
-	return initialColorData.toHexString();
 }

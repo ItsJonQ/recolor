@@ -52,7 +52,8 @@ export default function FooterBar({
 								variant="primary"
 								size="lg"
 							>
-								Regen
+								<Viewport.Mobile>Regen</Viewport.Mobile>
+								<Viewport.Desktop>Regenerate</Viewport.Desktop>
 							</ActionButton>
 						</Flexy.Item>
 					</ActionWrapper>

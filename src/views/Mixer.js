@@ -11,14 +11,17 @@ import View from '../components/View';
 
 import { transitions } from '../styles/transitions';
 
+const initialColor = generateRandomColor();
+
 export default function Mixer() {
-	const [color, setColor] = useState(generateRandomColor());
+	const [color, setColor] = useState(initialColor);
 	const regenerateColor = () => setColor(generateRandomColor());
 	const colors = generateColors(color, { debug: true });
 
 	const {
 		accent,
 		text,
+		hueName,
 		debug: { complement, isLight },
 	} = colors;
 	const originalComp = {
@@ -44,6 +47,9 @@ export default function Mixer() {
 						<Label>START</Label>
 						<Swatch color={color} label="START" />
 						<Spacer />
+						<Label isMuted size="xs">
+							{hueName}
+						</Label>
 						<Label isMuted size="xs">
 							{isLight ? 'LIGHT' : 'DARK'}
 						</Label>
