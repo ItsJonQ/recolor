@@ -28,6 +28,18 @@ const MOST_READABLE_OPTIONS = {
 	size: 'small',
 };
 
+const BRIGHTNESS_TWEAK = 10;
+const SATURATION_TWEAK = 20;
+const UI_BRIGHTNESS_TWEAK = 15;
+
+function isNotBlack(color) {
+	return color.toLowerCase() !== BLACK;
+}
+
+function isNotWhite(color) {
+	return color.toLowerCase() !== WHITE;
+}
+
 function shouldRegenerateColor(color) {
 	const colorHex = color.toLowerCase();
 
@@ -81,6 +93,17 @@ export function getColorHueName(color) {
 	return 'red';
 }
 
+export function getLuminosityName(color) {
+	const { l } = colorize(color).toHsl();
+	if (l >= 0.6) {
+		return 'bright';
+	}
+	if (l > 0.45 && l < 0.6) {
+		return 'light';
+	}
+	return 'dark';
+}
+
 export function generateRandomColor() {
 	const nextColor = randomColor(RANDOM_COLOR_OPTIONS);
 	const adjustmentRange = [0, 5, 10, 15, 20];
@@ -118,55 +141,70 @@ export function generateColors(nextColor, options = {}) {
 	const data = colorize(nextColor).splitcomplement();
 	const complement = data.map(d => d.toHexString());
 
-	let [color, accent, text] = complement;
+	let [color, accent] = complement;
+	let text = color;
 
 	const isLight = colorize.isReadable(BLACK, color, IS_READABLE_OPTIONS);
 	const hueName = getColorHueName(color);
 
-	try {
-		if (isLight) {
-			const darkenVariants = [40, 50, 55, 60, 65, 70]
-				.map(av =>
-					colorize(accent)
-						.darken(av)
-						.toHexString()
-				)
-				.filter(av => av !== BLACK);
+	if (isLight) {
+		const darkenVariants = [20, 30, 40, 50, 55, 60, 65]
+			.map(av =>
+				colorize(accent)
+					.darken(av)
+					.toHexString()
+			)
+			.filter(isNotBlack);
 
-			accent = colorize
-				.mostReadable(color, darkenVariants, MOST_READABLE_OPTIONS)
-				.toHexString();
+		const darkenTextVariants = [20, 30, 40, 50, 55, 60, 65, 70, 80]
+			.map(av =>
+				colorize(text)
+					.darken(av)
+					.toHexString()
+			)
+			.filter(isNotBlack);
 
-			// accent = colorize.mix(complement.accent, accent, 50).toHexString();
+		accent = colorize
+			.mostReadable(color, darkenVariants, MOST_READABLE_OPTIONS)
+			.saturate(SATURATION_TWEAK)
+			.toHexString();
 
-			text = colorize(color)
-				.darken(60)
-				.toHexString();
-		} else {
-			const lightenVariants = [10, 20, 25, 30, 35, 40]
-				.map(av =>
-					colorize(accent)
-						.lighten(av)
-						.toHexString()
-				)
-				.filter(av => av !== WHITE);
+		text = colorize
+			.mostReadable(color, darkenTextVariants, MOST_READABLE_OPTIONS)
+			.toHexString();
+	} else {
+		const lightenVariants = [10, 20, 25, 30, 35, 40]
+			.map(av =>
+				colorize(accent)
+					.lighten(av)
+					.toHexString()
+			)
+			.filter(isNotWhite);
 
-			accent = colorize
-				.mostReadable(color, lightenVariants, MOST_READABLE_OPTIONS)
-				.toHexString();
+		const lightenTextVariants = [10, 20, 25, 30, 35, 40, 50, 60, 70]
+			.map(av =>
+				colorize(text)
+					.lighten(av)
+					.toHexString()
+			)
+			.filter(isNotWhite);
 
-			text = colorize(color)
-				.lighten(60)
-				.toHexString();
-		}
-	} catch {}
+		accent = colorize
+			.mostReadable(color, lightenVariants, MOST_READABLE_OPTIONS)
+			.saturate(SATURATION_TWEAK)
+			.toHexString();
+
+		text = colorize
+			.mostReadable(color, lightenTextVariants, MOST_READABLE_OPTIONS)
+			.toHexString();
+	}
 
 	let ui = colorize(color);
 
 	if (isLight) {
-		ui = ui.lighten(20).toHexString();
+		ui = ui.lighten(UI_BRIGHTNESS_TWEAK).toHexString();
 	} else {
-		ui = ui.darken(20).toHexString();
+		ui = ui.darken(UI_BRIGHTNESS_TWEAK).toHexString();
 	}
 
 	const colors = {
@@ -213,19 +251,19 @@ export function getInitialColorValue(color) {
 }
 
 export function refineColor(color) {
-	const nextColors = colorize(color)
-		.analogous()
-		.map(c => c.toHexString());
-	const [, nextColor] = nextColors;
+	const luminosity = getLuminosityName(color);
 
-	_setPreviousColorHueName(nextColor);
+	const nextColor = randomColor({
+		luminosity,
+		hue: getColorHueName(color),
+	});
 
 	return nextColor;
 }
 
 export function lightenColor(color) {
 	const nextColor = colorize(color)
-		.lighten(10)
+		.lighten(BRIGHTNESS_TWEAK)
 		.toHexString();
 
 	_setPreviousColorHueName(nextColor);
@@ -235,7 +273,7 @@ export function lightenColor(color) {
 
 export function darkenColor(color) {
 	const nextColor = colorize(color)
-		.darken(10)
+		.darken(BRIGHTNESS_TWEAK)
 		.toHexString();
 
 	_setPreviousColorHueName(nextColor);
