@@ -1,0 +1,5 @@
+# Allows for JS single-page-app to route correctly
+[[redirects]]
+	from = "/*"
+	to = "/index.html"
+	status = 200
